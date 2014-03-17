@@ -37,10 +37,9 @@ public class GamePanel extends JPanel implements KeyListener {
     
     private ActionListener m_listener;
     
-    private BufferedImage m_background; 
+    private Background m_background;
     private TileMap m_tileMap;
-    
-    Player m_player;
+    private Player m_player;
     
     private State m_gameState;
     
@@ -59,16 +58,9 @@ public class GamePanel extends JPanel implements KeyListener {
     }
     
     public void init(){        
-        File backgroundImageFile = new File("src/images/Background.png");
-        try{
-            m_background = ImageIO.read(backgroundImageFile );
-        }catch(Exception e){
-            System.out.println("Something wrong with file " 
-                    + backgroundImageFile.getAbsolutePath());                    
-        }
-
         // Init Game loop
         m_listener = new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent event)
             {   
                 update();
@@ -78,6 +70,8 @@ public class GamePanel extends JPanel implements KeyListener {
         
         m_tileMap = new TileMap("src/TileMaps/TestMap.txt", WIDTH, HEIGHT);
         m_tileMap.loadTileSet("src/images/MapTileSet.png");
+        
+        m_background = new Background(Background.BGTheme.ORIGINAL, WIDTH, HEIGHT);
         
         m_player = new Player(m_tileMap);
         m_player.setx(200);
@@ -104,7 +98,8 @@ public class GamePanel extends JPanel implements KeyListener {
             case MENU:
                 
                 break;
-            case GAME:                
+            case GAME:            
+                m_background.update();
                 m_player.update();
                 break;
             default:
@@ -118,7 +113,7 @@ public class GamePanel extends JPanel implements KeyListener {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;
-        g2.drawImage(m_background, 0, 0, WIDTH, HEIGHT, null);
+        m_background.draw(g2);
         m_tileMap.draw(g2);
         m_player.draw(g2);
     }

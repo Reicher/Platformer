@@ -178,13 +178,13 @@ public class Player {
         
         
         // Check for walls
-        // is not 100%, when player hits the ceilning m_dx = 0.
-        calculateCorners(toX, m_y-1);    
+        // is not 100%, when player hits the ceilning m_dx = 0.   
+        calculateCorners(toX, m_y-1); 
         
         // Check Left wall
         if(m_dx < 0 && (m_topLeft || m_bottomLeft))
                 m_dx = 0;
-        // Check Right wall
+        // Check Right wall   
         else if(m_dx > 0 && (m_topRight || m_bottomRight))
                 m_dx = 0;
                       
@@ -193,6 +193,7 @@ public class Player {
             m_dx = 0;
             m_x = (m_tileMap.getTileWidth() * m_tileMap.getGridColums()) - 1;
         }
+        // check for Left edge of screen
         else if(m_x <= 0){
             m_dx = 0;
             m_x = 1;
@@ -229,6 +230,7 @@ public class Player {
         m_x += m_dx;
         m_y += m_dy;
     }
+    
 
     public void draw(Graphics2D g) {
         
