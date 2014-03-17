@@ -36,12 +36,17 @@ public class GamePanel extends JPanel implements KeyListener {
     private boolean m_releasedJump = true;
     
     private ActionListener m_listener;
-    private Graphics2D m_g2;
     
     private BufferedImage m_background; 
     private TileMap m_tileMap;
     
     Player m_player;
+    
+    private State m_gameState;
+    
+    private enum State{
+        EXIT, MENU, GAME
+    }
 
     
     public GamePanel() {
@@ -61,9 +66,7 @@ public class GamePanel extends JPanel implements KeyListener {
             System.out.println("Something wrong with file " 
                     + backgroundImageFile.getAbsolutePath());                    
         }
-        
-        m_g2 = (Graphics2D) m_background.getGraphics();
-        
+
         // Init Game loop
         m_listener = new ActionListener(){
             public void actionPerformed(ActionEvent event)
@@ -83,6 +86,8 @@ public class GamePanel extends JPanel implements KeyListener {
         gameTimer = new Timer(targetTime, m_listener);
         addKeyListener(this);
         
+        m_gameState = State.GAME;
+        
         m_loaded = true;
         gameTimer.start();
     }
@@ -91,7 +96,20 @@ public class GamePanel extends JPanel implements KeyListener {
         if(!m_loaded)
             return;
         
-        m_player.update();
+        switch(m_gameState){
+            case EXIT:
+                JFrame parentJFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                parentJFrame.dispatchEvent(new WindowEvent(parentJFrame, WindowEvent.WINDOW_CLOSING));
+                break;
+            case MENU:
+                
+                break;
+            case GAME:                
+                m_player.update();
+                break;
+            default:
+                System.out.println("Invalid state");
+        }
 
     }
     
@@ -129,6 +147,8 @@ public class GamePanel extends JPanel implements KeyListener {
                 m_player.setJumping(true);
                 m_releasedJump = false;
         }
+        if(code == KeyEvent.VK_ESCAPE)
+            m_gameState = State.EXIT;
     }
  
     @Override

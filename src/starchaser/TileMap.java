@@ -42,6 +42,14 @@ public class TileMap {
         return y /  m_tileSize[1];
     }
     
+    public int getGridColums(){
+        return m_mapGridSize[0];
+    }
+    
+    public int getGridRows(){
+        return m_mapGridSize[1];
+    }
+    
     public TileMap(String tileMapFile, int width, int height){
         m_screenSize = new int[] {width, height};
         m_mapGridSize = new int[2];
@@ -96,6 +104,9 @@ public class TileMap {
     }
     
     public boolean isBlocked(int row, int col) {
+        if(row >= getGridRows() || col >= getGridColums())
+            return false;
+        
         int rc = m_map[row][col];
         
         int r = rc / m_tiles[0].length;

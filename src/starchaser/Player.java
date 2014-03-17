@@ -184,11 +184,19 @@ public class Player {
         // Check Left wall
         if(m_dx < 0 && (m_topLeft || m_bottomLeft))
                 m_dx = 0;
-            
-        
         // Check Right wall
-        if(m_dx > 0 && (m_topRight || m_bottomRight)) 
+        else if(m_dx > 0 && (m_topRight || m_bottomRight))
                 m_dx = 0;
+                      
+        // check for right edge of screen
+        if( m_x >= (m_tileMap.getTileWidth() * m_tileMap.getGridColums())){
+            m_dx = 0;
+            m_x = (m_tileMap.getTileWidth() * m_tileMap.getGridColums()) - 1;
+        }
+        else if(m_x <= 0){
+            m_dx = 0;
+            m_x = 1;
+        }
         
         // sprite animation
         if(m_left || m_right) {
