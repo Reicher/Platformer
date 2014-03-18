@@ -17,7 +17,10 @@ public class Player {
     
     private int m_x, m_y;
     private double m_dx, m_dy;
+    private int m_maxX;
+    
     private int m_width, m_height;
+    
     private double m_moveSpeed, m_maxSpeed, m_stopSpeed;
     private double m_maxFallingSpeed;
     private double m_gravity;
@@ -48,6 +51,9 @@ public class Player {
     public void setRight(boolean b) { m_right = b; }
     public void setJumping(boolean b) {
         m_jumping = !m_inAir ? true : m_jumping;
+    }
+    public int getMaxX(){
+        return m_maxX;
     }
     
     void calculateCorners(double tx, double ty){
@@ -166,13 +172,13 @@ public class Player {
         else{
             m_inAir = false;
             m_y = (m_tileMap.getRowTile(m_y) + 1) // +1 to get the one to stand on
-                    * m_tileMap.getTileHeight() - m_height/2;
+                    * m_tileMap.getTileSize() - m_height/2;
         }
         
         // Check head!
         if(m_topRight || m_topLeft){
             m_y = (m_tileMap.getRowTile(m_y)) // +1 to get the one to stand on
-                    * m_tileMap.getTileHeight() + m_height/2;
+                    * m_tileMap.getTileSize() + m_height/2;
             m_dy = 0;
         }
         
@@ -189,9 +195,9 @@ public class Player {
                 m_dx = 0;
                       
         // check for right edge of screen
-        if( m_x >= (m_tileMap.getTileWidth() * m_tileMap.getGridColums())){
+        if( m_x >= (m_tileMap.getTileSize() * m_tileMap.getGridColums())){
             m_dx = 0;
-            m_x = (m_tileMap.getTileWidth() * m_tileMap.getGridColums()) - 1;
+            m_x = (m_tileMap.getTileSize() * m_tileMap.getGridColums()) - 1;
         }
         // check for Left edge of screen
         else if(m_x <= 0){
@@ -227,8 +233,11 @@ public class Player {
         }
         
         // Update pos
-        m_x += m_dx;
+        m_x += m_dx;                 
         m_y += m_dy;
+        
+        if(m_x > m_maxX)
+            m_maxX = m_x;
     }
     
 

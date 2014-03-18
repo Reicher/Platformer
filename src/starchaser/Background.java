@@ -17,30 +17,19 @@ public class Background {
     private int m_width, m_height;
     private BufferedImage m_background; 
     
-    
     private Animation m_stars;
-    
-    private BGTheme m_theme;
-    
+    private long m_starStartTime;
+    private long m_starDelay;
+    private int[] m_starPos;
+
     private File m_backgroundImageFile;
     
-    public enum BGTheme{
-        ORIGINAL
-    }
-    
-    Background(BGTheme theme, int width, int height){
-        m_theme = theme;
+    Background(int width, int height){
         m_width = width;
         m_height = height;               
-    
-        switch(theme){
-            case ORIGINAL:
-                m_backgroundImageFile = new File("src/images/Background.png");
-                break;
-            default:
-                System.out.println("Unknown theme");
-        }
-            
+
+        m_backgroundImageFile = new File("src/images/Background.png");
+
         BufferedImage wholeStar = null;
         try{
             m_background = ImageIO.read(m_backgroundImageFile);            
@@ -51,6 +40,8 @@ public class Background {
         }
         
         // Load star animation
+        m_starPos = new int[2];
+        m_starDelay = (int)(Math.random() * 4000.0);
         BufferedImage[] starImages = new BufferedImage[4]; 
         for(int i = 0; i < starImages.length; i++)
             starImages[i] = wholeStar.getSubimage(
@@ -58,22 +49,29 @@ public class Background {
 
         m_stars = new Animation();
         m_stars.setFrames(starImages);
-        m_stars.setDelay(50);
+        m_stars.setDelay(-1);
   
     }
     
     public void draw(Graphics2D g) {
         g.drawImage(m_background, 0, 0, m_width, m_height, null);
 
-        g.drawImage(
-            m_stars.getImage(),
-            400, 100,
-            32, 32,
-            null
-        );
+        if(m_stars.isRunning())
+            g.drawImage(m_stars.getImage()
+                , m_starPos[0]
+                , m_starPos[1]
+                , 32, 32, null );
     }
     
-    public void update(){
+    public void update(){        
+        long elapsed = (System.nanoTime() - m_starStartTime) / 1000000;
+        if(elapsed > m_starDelay) {
+            m_starStartTime = System.nanoTime();
+            m_starDelay = (int)(Math.random() * 2000.0);
+            m_starPos[0] = (int)(Math.random() * m_width);
+            m_starPos[1] = (int)(Math.random() * m_height/2);
+            m_stars.DoOnceWithDelay(50);
+        }
         
         m_stars.update();
     }

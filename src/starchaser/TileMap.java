@@ -19,27 +19,23 @@ public class TileMap {
     
     private int[] m_mapGridSize;
     private int[] m_screenSize;
-    private int[] m_tileSize;
+    private int m_tileSize;
     private int[][] m_map;   
 
     private BufferedImage m_tileset;
     private final int m_tileSetOriginalSize = 32;
     public Tile[][] m_tiles;
     
-    public int getTileWidth(){
-        return m_tileSize[0];
-    }
-    
-    public int getTileHeight(){
-        return m_tileSize[1];
+    public int getTileSize(){
+        return m_tileSize;
     }
     
     public int getColTile(int x) {
-        return x /  m_tileSize[0];
+        return x /  m_tileSize;
         
     }
     public int getRowTile(int y) {
-        return y /  m_tileSize[1];
+        return y /  m_tileSize;
     }
     
     public int getGridColums(){
@@ -53,7 +49,6 @@ public class TileMap {
     public TileMap(String tileMapFile, int width, int height){
         m_screenSize = new int[] {width, height};
         m_mapGridSize = new int[2];
-        m_tileSize = new int[2];
 
         try {   
             BufferedReader br = new BufferedReader(new FileReader(tileMapFile));
@@ -62,8 +57,7 @@ public class TileMap {
             m_mapGridSize[1] = Integer.parseInt(br.readLine());            
             m_map = new int[m_mapGridSize[0]][m_mapGridSize[1]];
 
-            m_tileSize[0] = m_screenSize[0] / m_mapGridSize[0];
-            m_tileSize[1] = m_screenSize[1] / m_mapGridSize[1];
+            m_tileSize = m_screenSize[1] / m_mapGridSize[1];
 
             String delimiters = "\\s+";
             for(int row = 0; row < m_mapGridSize[1]; row++) {
@@ -103,10 +97,7 @@ public class TileMap {
         }
     }
     
-    public boolean isBlocked(int row, int col) {
-        if(row >= getGridRows() || col >= getGridColums())
-            return false;
-        
+    public boolean isBlocked(int row, int col) {        
         int rc = m_map[row][col];
         
         int r = rc / m_tiles[0].length;
@@ -126,10 +117,10 @@ public class TileMap {
 
                 g.drawImage(
                     m_tiles[r][c].getImage(),
-                    col * m_tileSize[0],
-                    row * m_tileSize[1],
-                    m_tileSize[0], 
-                    m_tileSize[1],
+                    col * m_tileSize,
+                    row * m_tileSize,
+                    m_tileSize, 
+                    m_tileSize,
                     null
                 );
             }
