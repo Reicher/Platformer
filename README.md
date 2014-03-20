@@ -3,7 +3,8 @@ Platform
 
 The beginning to a platform game with a space theme. The story goes something like this:
 
-**One day our hero goes on a midnight stroll to clear his/her head. After a while it becomes clear that some stars are missing. Our hero finds some stars laying around on the map and picks them up. A NPC (Jupiter/Carl Sagan/King of Cosmos) shows up and tells the our hero that some villain is steeling stars. The star hunt begins**
+*One day our hero goes on a midnight stroll to clear his/her head. After a while it becomes clear that some stars are missing. Our hero finds some stars laying around on the map and picks them up. A NPC (Jupiter/Carl Sagan/King of Cosmos) shows up and tells the our hero that some villain is steeling stars. The star hunt begins*
+
 
 ### Features so far:
 * 2D map being created in an easy way.
@@ -27,3 +28,4 @@ The beginning to a platform game with a space theme. The story goes something li
 * Dangerous things! Black holes, gamma rays, Aliens, MIB etc.
 * Music and sounds
 * A simple menu system with settings
+* Having all the graphics easily replaced since I have friends that want to do their own.
