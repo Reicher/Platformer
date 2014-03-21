@@ -38,7 +38,7 @@ public class GamePanel extends JPanel implements KeyListener {
     private ActionListener m_listener;
     
     private Background m_background;
-    private TileMap m_tileMap;
+    private Map m_tileMap;
     private Player m_player;
     
     private State m_gameState;
@@ -69,9 +69,8 @@ public class GamePanel extends JPanel implements KeyListener {
             }
         }; 
         
-        m_tileMap = new TileMap("src/TileMaps/TestMap.txt", WIDTH, HEIGHT);
-        m_tileMap.loadTileSet("src/images/MapTileSet.png");
-        
+        m_tileMap = new Map("src/TileMaps/TestMap.txt", WIDTH, HEIGHT);
+  
         m_background = new Background(WIDTH, HEIGHT);
         
         m_player = new Player(m_tileMap);        

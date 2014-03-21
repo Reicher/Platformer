@@ -42,7 +42,7 @@ public class Player {
     private BufferedImage[] m_jumpingSprites;
     private BufferedImage[] m_fallingSprites;
     
-    private TileMap m_tileMap;
+    private Map m_tileMap;
     
     public void setx(int i) { m_x = i; }
     public void sety(int i) { m_y = i; }
@@ -76,7 +76,7 @@ public class Player {
         m_topRight = m_tileMap.isBlocked(cx, cy);
     }
     
-    public Player(TileMap tileMap) {
+    public Player(Map tileMap) {
 
         m_tileMap = tileMap;
         m_width = 60;
@@ -91,31 +91,12 @@ public class Player {
         
         m_maxFallingSpeed = 20.0;
         m_gravity = 0.4;
-        
-        m_idleSprites = new BufferedImage[1];
-        m_jumpingSprites = new BufferedImage[1];
-        m_fallingSprites = new BufferedImage[1];
-        m_walkingSprites = new BufferedImage[4];
-        
+
         // Load sprites
-        try{
-            int tileSize = 32;
-            
-            m_idleSprites[0] = ImageIO.read(new File("src/images/PlayerIdle.png"));
-            m_jumpingSprites[0] = ImageIO.read(new File("src/images/PlayerJump.png"));
-            m_fallingSprites[0] = ImageIO.read(new File("src/images/PlayerFalling.png"));
-            
-            BufferedImage image = ImageIO.read(new File("src/images/PlayerWalking.png"));
-            for(int i = 0; i < m_walkingSprites.length; i++)
-                m_walkingSprites[i] = image.getSubimage(
-                    i * tileSize + i,
-                    0,
-                    tileSize,
-                    tileSize);
-       
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        m_idleSprites = AssetHandler.getPlayerIdle();
+        m_jumpingSprites =AssetHandler.getPlayerJump();
+        m_fallingSprites = AssetHandler.getPlayerFall();
+        m_walkingSprites = AssetHandler.getPlayerWalk();
 
         m_animation = new Animation();
         m_animation.setFrames(m_idleSprites);

@@ -23,7 +23,7 @@ public class Camera {
         m_mode = CameraMode.STATIC;
     }
     
-    public void setMap(TileMap map){
+    public void setMap(Map map){
         m_limitX[0] = 0;
         m_limitY[0] = 0;
         

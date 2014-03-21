@@ -21,34 +21,19 @@ public class Background {
     private long m_starStartTime;
     private long m_starDelay;
     private int[] m_starPos;
-
-    private File m_backgroundImageFile;
     
     Background(int width, int height){
         m_width = width;
         m_height = height;               
+    
+        m_background =  AssetHandler.getBackground();    
 
-        m_backgroundImageFile = new File("src/images/Background.png");
-
-        BufferedImage wholeStar = null;
-        try{
-            m_background = ImageIO.read(m_backgroundImageFile);            
-            wholeStar = ImageIO.read(new File("src/images/StarAni.png"));
-        }catch(Exception e){
-            System.out.println("Something wrong with file " 
-                    + m_backgroundImageFile.getAbsolutePath());                    
-        }
-        
         // Load star animation
         m_starPos = new int[2];
         m_starDelay = (int)(Math.random() * 4000.0);
-        BufferedImage[] starImages = new BufferedImage[4]; 
-        for(int i = 0; i < starImages.length; i++)
-            starImages[i] = wholeStar.getSubimage(
-            i * 30 + i, 0, 30, 30);
 
         m_stars = new Animation();
-        m_stars.setFrames(starImages);
+        m_stars.setFrames(AssetHandler.getBackgroundStar());
         m_stars.setDelay(-1);
   
     }
