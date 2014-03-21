@@ -17,7 +17,6 @@ public class Player {
     
     private int m_x, m_y;
     private double m_dx, m_dy;
-    private int m_maxX;
     
     private int m_width, m_height;
     
@@ -47,13 +46,12 @@ public class Player {
     
     public void setx(int i) { m_x = i; }
     public void sety(int i) { m_y = i; }
+    public int getX(){ return m_x; }
+    public int getY(){ return m_y; }
     public void setLeft(boolean b) { m_left = b; }
     public void setRight(boolean b) { m_right = b; }
     public void setJumping(boolean b) {
         m_jumping = !m_inAir ? true : m_jumping;
-    }
-    public int getMaxX(){
-        return m_maxX;
     }
     
     void calculateCorners(double tx, double ty){
@@ -235,9 +233,6 @@ public class Player {
         // Update pos
         m_x += m_dx;                 
         m_y += m_dy;
-        
-        if(m_x > m_maxX)
-            m_maxX = m_x;
     }
     
 

@@ -29,8 +29,6 @@ public class GamePanel extends JPanel implements KeyListener {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
 
-    private int[] m_cameraPos;
-    private int[] m_playerStartPos;
     private int FPS = 30;
     private int targetTime = 1000 / FPS;
     private Timer gameTimer;
@@ -44,6 +42,7 @@ public class GamePanel extends JPanel implements KeyListener {
     private Player m_player;
     
     private State m_gameState;
+    private Camera m_gameCam;
     
     private enum State{
         EXIT, MENU, GAME
@@ -68,19 +67,20 @@ public class GamePanel extends JPanel implements KeyListener {
                 update();
                 draw();
             }
-        };
-        
-        m_cameraPos = new int[]{0, 0};        
+        }; 
         
         m_tileMap = new TileMap("src/TileMaps/TestMap.txt", WIDTH, HEIGHT);
         m_tileMap.loadTileSet("src/images/MapTileSet.png");
         
         m_background = new Background(WIDTH, HEIGHT);
         
-        m_player = new Player(m_tileMap);
-        m_playerStartPos = new int[]{200, 100};
-        m_player.setx(m_playerStartPos[0]);
-        m_player.sety(m_playerStartPos[1]);
+        m_player = new Player(m_tileMap);        
+        m_player.setx(200);
+        m_player.sety(100);
+        
+        m_gameCam = new Camera(0, 0, WIDTH, HEIGHT);
+        m_gameCam.setFollow(m_player);
+        m_gameCam.setMap(m_tileMap);
         
         gameTimer = new Timer(targetTime, m_listener);
         addKeyListener(this);
@@ -106,10 +106,6 @@ public class GamePanel extends JPanel implements KeyListener {
             case GAME:            
                 m_background.update();
                 m_player.update();
-                System.out.println("m_cameraPos[0]: " + m_cameraPos[0] + " WIDTH: " + WIDTH);
-                if((m_player.getMaxX() > (m_cameraPos[0] + WIDTH/2)) 
-                        && (-m_cameraPos[0] <  m_tileMap.getGridColums() * m_tileMap.getTileSize()- WIDTH))
-                    m_cameraPos[0] = (WIDTH/2)-m_player.getMaxX();
                 break;
             default:
                 System.out.println("Invalid state");
@@ -125,7 +121,7 @@ public class GamePanel extends JPanel implements KeyListener {
                 
         m_background.draw(g2);
         
-        g2.translate(m_cameraPos[0], m_cameraPos[1]);
+        m_gameCam.setup(g2);
         
         m_tileMap.draw(g2);
         m_player.draw(g2);
