@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 import starchaser.AssetHandler;
 
@@ -42,8 +43,11 @@ public class Map {
         m_mapGridSize = new int[2];
         
         try {   
-            BufferedReader br = new BufferedReader(new FileReader(tileMapFile));
 
+            InputStreamReader isReader = new InputStreamReader(
+                    ClassLoader.getSystemResourceAsStream("TileMaps/" + tileMapFile));
+            BufferedReader br = new BufferedReader(isReader);
+            
             m_mapGridSize[0] = Integer.parseInt(br.readLine());
             m_mapGridSize[1] = Integer.parseInt(br.readLine());  
             

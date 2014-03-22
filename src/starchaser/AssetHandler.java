@@ -27,17 +27,17 @@ public class AssetHandler {
     
     private static Source m_source;
     
-    private static File m_solidTileSetFile;
-    private static File m_decorTileSetFile;
-    private static File m_backgroundFile;
-    private static File m_backgroundStarFile;
+    private static String m_solidTileSetFile;
+    private static String m_decorTileSetFile;
+    private static String m_backgroundFile;
+    private static String m_backgroundStarFile;
     
-    private static File m_starFile;
+    private static String m_starFile;
     
-    private static File m_playerIdleFile;
-    private static File m_playerJumpFile;
-    private static File m_playerFallFile;
-    private static File m_playerWalkFile;
+    private static String m_playerIdleFile;
+    private static String m_playerJumpFile;
+    private static String m_playerFallFile;
+    private static String m_playerWalkFile;
     
    
     public enum Source{
@@ -69,7 +69,7 @@ public class AssetHandler {
     }
     
     private static void createFilePaths(){
-        String imagePath = "src/images/";
+        String imagePath = "images/";
         
         switch(m_source){
             case ORIGINAL: 
@@ -80,39 +80,51 @@ public class AssetHandler {
                 break;
         }
         
-        m_solidTileSetFile = new File(imagePath + "SolidTiles.png");
-        m_decorTileSetFile = new File(imagePath + "DecorativeTiles.png");
+        m_solidTileSetFile = imagePath + "SolidTiles.png";
+        m_decorTileSetFile = imagePath + "DecorativeTiles.png";
         
-        m_backgroundFile = new File(imagePath + "Background.png");
-        m_backgroundStarFile = new File(imagePath + "StarAni.png");
+        m_backgroundFile = imagePath + "Background.png";
+        m_backgroundStarFile = imagePath + "StarAni.png";
         
-        m_starFile = new File(imagePath + "Star.png");
+        m_starFile = imagePath + "Star.png";
         
-        m_playerIdleFile = new File(imagePath + "PlayerIdle.png");
-        m_playerJumpFile = new File(imagePath + "PlayerJump.png");
-        m_playerFallFile = new File(imagePath + "PlayerFalling.png");
-        m_playerWalkFile = new File(imagePath + "PlayerWalking.png");
+        m_playerIdleFile = imagePath + "PlayerIdle.png";
+        m_playerJumpFile = imagePath + "PlayerJump.png";
+        m_playerFallFile = imagePath + "PlayerFalling.png";
+        m_playerWalkFile = imagePath + "PlayerWalking.png";
     } 
     
     private static void loadGraphics(){
         int tileSize = 32;
         try{
-            m_background =  ImageIO.read(m_backgroundFile);
-            m_backgroundStar = toArray(ImageIO.read(m_backgroundStarFile), tileSize);
+            m_background =  loadImage(m_backgroundFile);
+            m_backgroundStar = toArray(loadImage(m_backgroundStarFile), tileSize);
             
-            m_playerIdle = toArray(ImageIO.read(m_playerIdleFile), tileSize);
-            m_playerJump = toArray(ImageIO.read(m_playerJumpFile), tileSize);
-            m_playerFall = toArray(ImageIO.read(m_playerFallFile), tileSize);
-            m_playerWalk = toArray(ImageIO.read(m_playerWalkFile), tileSize);
+            m_playerIdle = toArray(loadImage(m_playerIdleFile), tileSize);
+            m_playerJump = toArray(loadImage(m_playerJumpFile), tileSize);
+            m_playerFall = toArray(loadImage(m_playerFallFile), tileSize);
+            m_playerWalk = toArray(loadImage(m_playerWalkFile), tileSize);
             
-            m_star =  toArray(ImageIO.read(m_starFile), tileSize);
+            m_star =  toArray(loadImage(m_starFile), tileSize);
             
-            m_solidTiles = toArray(ImageIO.read(m_solidTileSetFile), tileSize);
-            m_decorTiles = toArray(ImageIO.read(m_decorTileSetFile), tileSize);
+            m_solidTiles = toArray(loadImage(m_solidTileSetFile), tileSize);
+            m_decorTiles = toArray(loadImage(m_decorTileSetFile), tileSize);
 
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+    
+    private static BufferedImage loadImage(String path){
+        BufferedImage tmp = null;
+        try{
+            tmp = ImageIO.read(ClassLoader.getSystemResource(path));
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return tmp;
     }
     
     private static BufferedImage[]  toArray(BufferedImage source, int tileSize){

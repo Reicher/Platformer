@@ -6,7 +6,6 @@ package starchaser.level;
 
 import java.awt.Graphics2D;
 import starchaser.Player;
-import starchaser.Star;
 
 /**
  *
@@ -15,7 +14,7 @@ import starchaser.Star;
 public class Level1 extends Level{
     
     public Level1(int width, int heigt){
-        super("src/TileMaps/TestMap.txt", width, heigt);
+        super("TestMap.txt", width, heigt);
         
     }
     

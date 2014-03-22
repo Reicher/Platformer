@@ -5,10 +5,7 @@
 package starchaser.level;
 
 import java.awt.Graphics2D;
-import starchaser.Background;
-import starchaser.Camera;
 import starchaser.Player;
-import starchaser.Star;
 
 /**
  *

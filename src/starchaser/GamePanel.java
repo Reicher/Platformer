@@ -4,6 +4,7 @@
  */
 package starchaser;
 
+import starchaser.level.Background;
 import starchaser.level.Map;
 import starchaser.level.Level;
 import starchaser.level.Level1;
