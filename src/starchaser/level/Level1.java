@@ -23,6 +23,10 @@ public class Level1 extends Level{
         super.init(player);
         
         addStars();
+        
+        m_exitDoor = new Door(m_levelMap.gridToScreenX(18), 
+                m_levelMap.gridToScreenY(5), 
+                m_levelMap.getTileSize());
     }
     
     private void addStars(){
@@ -38,6 +42,8 @@ public class Level1 extends Level{
         
         for(Star s : m_stars)
             s.draw(g);
+        
+        m_exitDoor.draw(g);
     }
 
     @Override
@@ -46,6 +52,8 @@ public class Level1 extends Level{
         
         for(Star s : m_stars)
             s.update();
+        
+        m_exitDoor.update();
     }
     
 }

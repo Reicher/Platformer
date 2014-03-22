@@ -18,6 +18,7 @@ public abstract class Level {
     protected Player m_player;
     protected Camera m_levelCam;
     protected Star[] m_stars;
+    protected Door m_exitDoor;
     
     protected int m_starsCollected;
     
@@ -65,5 +66,11 @@ public abstract class Level {
                 m_starsCollected++;
                 System.out.println("Stars collected: " + m_starsCollected);
             }
+        
+        // Check for exit
+        if(m_exitDoor.getBounds().intersects(m_player.getBounds())){
+            // Show "Press space to enter"
+            
+        }
     }
 }

@@ -19,6 +19,7 @@ public class AssetHandler {
     private static BufferedImage[] m_backgroundStar;
     
     private static BufferedImage[] m_star;
+    private static BufferedImage[] m_door;
     
     private static BufferedImage[] m_playerIdle;
     private static BufferedImage[] m_playerJump;
@@ -33,6 +34,7 @@ public class AssetHandler {
     private static String m_backgroundStarFile;
     
     private static String m_starFile;
+    private static String m_doorFile;
     
     private static String m_playerIdleFile;
     private static String m_playerJumpFile;
@@ -56,6 +58,7 @@ public class AssetHandler {
     public static BufferedImage[] getBackgroundStar(){ return m_backgroundStar; }
     
     public static BufferedImage[] getStar(){ return m_star; }
+    public static BufferedImage[] getDoor(){ return m_door; }
     
     public static BufferedImage[] getPlayerIdle(){ return m_playerIdle; }
     public static BufferedImage[] getPlayerJump(){ return m_playerJump; }
@@ -87,6 +90,7 @@ public class AssetHandler {
         m_backgroundStarFile = imagePath + "StarAni.png";
         
         m_starFile = imagePath + "Star.png";
+        m_doorFile = imagePath + "Door.png";
         
         m_playerIdleFile = imagePath + "PlayerIdle.png";
         m_playerJumpFile = imagePath + "PlayerJump.png";
@@ -106,6 +110,7 @@ public class AssetHandler {
             m_playerWalk = toArray(loadImage(m_playerWalkFile), tileSize);
             
             m_star =  toArray(loadImage(m_starFile), tileSize);
+            m_door =  toArray(loadImage(m_doorFile), tileSize);
             
             m_solidTiles = toArray(loadImage(m_solidTileSetFile), tileSize);
             m_decorTiles = toArray(loadImage(m_decorTileSetFile), tileSize);
