@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package starchaser;
+package starchaser.level;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import javax.imageio.ImageIO;
+import starchaser.AssetHandler;
 
 /**
  *
@@ -27,21 +28,14 @@ public class Map {
         return m_tileSize;
     }
     
-    public int getColTile(int x) {
-        return x /  m_tileSize;
-    }
+    public int getColTile(int x) { return x /  m_tileSize; }
+    public int getRowTile(int y) { return y /  m_tileSize; }
     
-    public int getRowTile(int y) {
-        return y /  m_tileSize;
-    }
+    public int getGridColums(){ return m_mapGridSize[0]; }
+    public int getGridRows(){ return m_mapGridSize[1]; }
     
-    public int getGridColums(){
-        return m_mapGridSize[0];
-    }
-    
-    public int getGridRows(){
-        return m_mapGridSize[1];
-    }
+    public int gridToScreenX(int x){ return (x * m_tileSize) + m_tileSize/2; }
+    public int gridToScreenY(int y){ return (y * m_tileSize) + m_tileSize/2; }
     
     public Map(String tileMapFile, int width, int height){
         m_screenSize = new int[] {width, height};
@@ -83,8 +77,8 @@ public class Map {
         }
         catch(Exception e) { e.printStackTrace(); }    
     }
-    
-    public boolean isBlocked(int row, int col) {        
+
+    public boolean isBlocked(int row, int col) {    
         int rc = m_solidMap[row][col];
         return rc != 0;
     }

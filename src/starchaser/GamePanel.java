@@ -4,6 +4,9 @@
  */
 package starchaser;
 
+import starchaser.level.Map;
+import starchaser.level.Level;
+import starchaser.level.Level1;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -68,12 +71,11 @@ public class GamePanel extends JPanel implements KeyListener {
                 update();
                 draw();
             }
-        }; 
-      
+        };
+        
+        m_player = new Player(WIDTH/11, WIDTH/11); 
         m_currentLevel = new Level1(WIDTH, HEIGHT);
-        m_player = new Player(WIDTH/10, WIDTH/10);        
-        m_player.setPos(200, 100);
-        m_currentLevel.addPlayer(m_player);
+        m_currentLevel.init(m_player);
   
         gameTimer = new Timer(targetTime, m_listener);
         addKeyListener(this);

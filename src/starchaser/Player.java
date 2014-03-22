@@ -4,7 +4,9 @@
  */
 package starchaser;
 
+import starchaser.level.Map;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -19,6 +21,8 @@ public class Player {
     private double m_dx, m_dy;
     
     private int m_width, m_height;
+    
+    private boolean m_dead;
     
     private double m_moveSpeed, m_maxSpeed, m_stopSpeed;
     private double m_maxFallingSpeed;
@@ -46,6 +50,7 @@ public class Player {
     }
     public int getX(){ return m_x; }
     public int getY(){ return m_y; }
+    public boolean isDead(){ return m_dead; }
     public void setLeft(boolean b) { m_left = b; }
     public void setRight(boolean b) { m_right = b; }
     public void setJumping(boolean b) {
@@ -59,6 +64,7 @@ public class Player {
 
         m_width = width;
         m_height = height;
+
         
         m_facingLeft = false;
         m_left = m_right = m_jumping = m_inAir = false;
@@ -71,6 +77,15 @@ public class Player {
         m_gravity = 0.4;
 
         m_animation = new Animation();
+        m_animation.setFrames(AssetHandler.getPlayerIdle());
+        m_animation.setDelay(-1);
+        
+        init();
+    }
+    
+    public void init(){
+        m_dead = false;
+        
         m_animation.setFrames(AssetHandler.getPlayerIdle());
         m_animation.setDelay(-1);
     }
@@ -111,14 +126,24 @@ public class Player {
         }
         else 
             m_dy = 0;
-       
-        CheckForObstacles();
+        
+       if(haveFallenOffMap())
+           m_dead = true;
+       else
+            CheckForObstacles();
         
         setAnimation();
         
         // Update pos
         m_x += m_dx;                 
         m_y += m_dy;
+    }
+    
+    private boolean haveFallenOffMap(){
+        if( m_y >= (m_tileMap.getTileSize() * m_tileMap.getGridRows() - m_height))
+            return true;
+        
+        return false;
     }
     
     private void CheckForObstacles(){
@@ -168,7 +193,7 @@ public class Player {
         }
     }
     
-        void calculateCorners(double tx, double ty){
+    void calculateCorners(double tx, double ty){
         // Bottom Left Corner
         int cx = m_tileMap.getColTile((int)tx - m_width/2);
         int cy = m_tileMap.getRowTile((int)ty + m_height/2);   
@@ -217,6 +242,11 @@ public class Player {
         if(m_dx > 0) {
             m_facingLeft = false;
         }
+    }
+    
+    // For simple intersections
+    public Rectangle getBounds() {
+        return new Rectangle(m_x, m_y, m_width, m_height);
     }
     
     public void draw(Graphics2D g) {

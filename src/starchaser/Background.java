@@ -22,7 +22,7 @@ public class Background {
     private long m_starDelay;
     private int[] m_starPos;
     
-    Background(int width, int height){
+    public Background(int width, int height){
         m_width = width;
         m_height = height;               
     

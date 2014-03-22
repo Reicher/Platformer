@@ -4,6 +4,7 @@
  */
 package starchaser;
 
+import starchaser.level.Map;
 import java.awt.Graphics2D;
 
 /**
