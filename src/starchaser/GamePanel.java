@@ -4,10 +4,6 @@
  */
 package starchaser;
 
-import starchaser.level.Background;
-import starchaser.level.Map;
-import starchaser.level.Level;
-import starchaser.level.Level1;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -18,11 +14,18 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import starchaser.level.Background;
+import starchaser.level.Level;
+import starchaser.level.Level1;
+import starchaser.level.Level2;
+import starchaser.level.Map;
 
 /**
  *
@@ -48,6 +51,7 @@ public class GamePanel extends JPanel implements KeyListener {
     private State m_gameState;
     
     Level m_currentLevel;
+    Vector<Level> m_levels;
     
     private enum State{
         EXIT, MENU, GAME
@@ -75,7 +79,13 @@ public class GamePanel extends JPanel implements KeyListener {
         };
         
         m_player = new Player(WIDTH/11, WIDTH/11); 
-        m_currentLevel = new Level1(WIDTH, HEIGHT);
+        
+        m_levels = new Vector<Level>();
+        m_levels.add(new Level1(WIDTH, HEIGHT));
+        m_levels.add(new Level2(WIDTH, HEIGHT));
+        
+        m_currentLevel = m_levels.firstElement();
+        m_levels.removeElement(m_currentLevel);
         m_currentLevel.init(m_player);
   
         gameTimer = new Timer(targetTime, m_listener);
@@ -102,6 +112,13 @@ public class GamePanel extends JPanel implements KeyListener {
             case GAME:    
                 m_currentLevel.update();
                 m_player.update();
+                
+                if(m_currentLevel.isCompleted()){
+                    m_currentLevel = m_levels.firstElement();
+                    m_levels.removeElement(m_currentLevel);
+                    m_currentLevel.init(m_player);
+                }
+
                 break;
             default:
                 System.out.println("Invalid state");
@@ -145,6 +162,9 @@ public class GamePanel extends JPanel implements KeyListener {
                 m_player.setJumping(true);
                 m_releasedJump = false;
         }
+        if(code == KeyEvent.VK_SPACE && m_releasedJump) {
+                m_player.setUsing(true);
+        }
         if(code == KeyEvent.VK_ESCAPE)
             m_gameState = State.EXIT;
     }
@@ -162,6 +182,9 @@ public class GamePanel extends JPanel implements KeyListener {
         if(code == KeyEvent.VK_UP) {
             m_player.setJumping(false);
             m_releasedJump = true;
+        }        
+        if(code == KeyEvent.VK_SPACE && m_releasedJump) {
+                m_player.setUsing(false);
         }
     }
 }

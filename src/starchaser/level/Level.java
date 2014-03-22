@@ -20,6 +20,8 @@ public abstract class Level {
     protected Star[] m_stars;
     protected Door m_exitDoor;
     
+    protected boolean m_completed;
+    
     protected int m_starsCollected;
     
     public Level(String tileMap, int width, int height){
@@ -32,6 +34,8 @@ public abstract class Level {
         return m_levelMap;
     }
     
+    public boolean isCompleted(){ return m_completed; }
+    
     public void init(Player player){
         m_player = player;
         m_player.init();
@@ -43,6 +47,8 @@ public abstract class Level {
         m_levelCam.setMap(m_levelMap);
         
         player.setMap(m_levelMap);
+        
+        m_completed = false;
     }
     
     public void draw(Graphics2D g){
@@ -70,7 +76,9 @@ public abstract class Level {
         // Check for exit
         if(m_exitDoor.getBounds().intersects(m_player.getBounds())){
             // Show "Press space to enter"
-            
+            if(m_player.isUsing()){
+                m_completed = true;
+            }
         }
     }
 }

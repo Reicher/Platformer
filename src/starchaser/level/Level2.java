@@ -11,10 +11,10 @@ import starchaser.Player;
  *
  * @author regen
  */
-public class Level1 extends Level{
+public class Level2 extends Level{
     
-    public Level1(int width, int heigt){
-        super("Level1.txt", width, heigt);
+    public Level2(int width, int heigt){
+        super("Level2.txt", width, heigt);
         
     }
     
@@ -30,10 +30,8 @@ public class Level1 extends Level{
     }
     
     private void addStars(){
-        m_stars = new Star[3];
-        m_stars[0] = new Star(m_levelMap.gridToScreenX(2), m_levelMap.gridToScreenY(5), m_levelMap.getTileSize());
-        m_stars[1] = new Star(m_levelMap.gridToScreenX(5), m_levelMap.gridToScreenY(1), m_levelMap.getTileSize());
-        m_stars[2] = new Star(m_levelMap.gridToScreenX(15), m_levelMap.gridToScreenY(3), m_levelMap.getTileSize());
+        m_stars = new Star[1];
+        m_stars[0] = new Star(m_levelMap.gridToScreenX(10), m_levelMap.gridToScreenY(5), m_levelMap.getTileSize());
     }
 
     @Override

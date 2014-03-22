@@ -23,6 +23,7 @@ public class Player {
     private int m_width, m_height;
     
     private boolean m_dead;
+    private boolean m_isUsing;
     
     private double m_moveSpeed, m_maxSpeed, m_stopSpeed;
     private double m_maxFallingSpeed;
@@ -64,7 +65,7 @@ public class Player {
 
         m_width = width;
         m_height = height;
-
+        m_isUsing = false;
         
         m_facingLeft = false;
         m_left = m_right = m_jumping = m_inAir = false;
@@ -271,6 +272,14 @@ public class Player {
                 null
             );
         }
+    }
+
+    public void setUsing(boolean b) {        
+        m_isUsing = b;
+    }
+    
+    public boolean isUsing(){
+        return m_isUsing;
     }
     
 
