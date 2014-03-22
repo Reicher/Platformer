@@ -42,7 +42,8 @@ public class GamePanel extends JPanel implements KeyListener {
     private Player m_player;
     
     private State m_gameState;
-    private Camera m_gameCam;
+    
+    Level m_currentLevel;
     
     private enum State{
         EXIT, MENU, GAME
@@ -68,19 +69,12 @@ public class GamePanel extends JPanel implements KeyListener {
                 draw();
             }
         }; 
-        
-        m_tileMap = new Map("src/TileMaps/TestMap.txt", WIDTH, HEIGHT);
+      
+        m_currentLevel = new Level1(WIDTH, HEIGHT);
+        m_player = new Player(WIDTH/10, WIDTH/10);        
+        m_player.setPos(200, 100);
+        m_currentLevel.addPlayer(m_player);
   
-        m_background = new Background(WIDTH, HEIGHT);
-        
-        m_player = new Player(m_tileMap);        
-        m_player.setx(200);
-        m_player.sety(100);
-        
-        m_gameCam = new Camera(0, 0, WIDTH, HEIGHT);
-        m_gameCam.setFollow(m_player);
-        m_gameCam.setMap(m_tileMap);
-        
         gameTimer = new Timer(targetTime, m_listener);
         addKeyListener(this);
         
@@ -102,8 +96,8 @@ public class GamePanel extends JPanel implements KeyListener {
             case MENU:
                 
                 break;
-            case GAME:            
-                m_background.update();
+            case GAME:    
+                m_currentLevel.update();
                 m_player.update();
                 break;
             default:
@@ -117,12 +111,8 @@ public class GamePanel extends JPanel implements KeyListener {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g; 
+        m_currentLevel.draw(g2);
                 
-        m_background.draw(g2);
-        
-        m_gameCam.setup(g2);
-        
-        m_tileMap.draw(g2);
         m_player.draw(g2);
     }
     

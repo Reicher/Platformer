@@ -18,6 +18,8 @@ public class AssetHandler {
     private static BufferedImage m_background;
     private static BufferedImage[] m_backgroundStar;
     
+    private static BufferedImage[] m_star;
+    
     private static BufferedImage[] m_playerIdle;
     private static BufferedImage[] m_playerJump;
     private static BufferedImage[] m_playerFall;
@@ -29,6 +31,8 @@ public class AssetHandler {
     private static File m_decorTileSetFile;
     private static File m_backgroundFile;
     private static File m_backgroundStarFile;
+    
+    private static File m_starFile;
     
     private static File m_playerIdleFile;
     private static File m_playerJumpFile;
@@ -50,6 +54,8 @@ public class AssetHandler {
     public static BufferedImage getDecorTile(int t){ return m_decorTiles[t]; }
     public static BufferedImage getBackground(){ return m_background; }
     public static BufferedImage[] getBackgroundStar(){ return m_backgroundStar; }
+    
+    public static BufferedImage[] getStar(){ return m_star; }
     
     public static BufferedImage[] getPlayerIdle(){ return m_playerIdle; }
     public static BufferedImage[] getPlayerJump(){ return m_playerJump; }
@@ -80,6 +86,8 @@ public class AssetHandler {
         m_backgroundFile = new File(imagePath + "Background.png");
         m_backgroundStarFile = new File(imagePath + "StarAni.png");
         
+        m_starFile = new File(imagePath + "Star.png");
+        
         m_playerIdleFile = new File(imagePath + "PlayerIdle.png");
         m_playerJumpFile = new File(imagePath + "PlayerJump.png");
         m_playerFallFile = new File(imagePath + "PlayerFalling.png");
@@ -97,6 +105,8 @@ public class AssetHandler {
             m_playerFall = toArray(ImageIO.read(m_playerFallFile), tileSize);
             m_playerWalk = toArray(ImageIO.read(m_playerWalkFile), tileSize);
             
+            m_star =  toArray(ImageIO.read(m_starFile), tileSize);
+            
             m_solidTiles = toArray(ImageIO.read(m_solidTileSetFile), tileSize);
             m_decorTiles = toArray(ImageIO.read(m_decorTileSetFile), tileSize);
 
@@ -113,3 +123,4 @@ public class AssetHandler {
         return tmp;
     }
 }
+

@@ -37,15 +37,13 @@ public class Player {
     private boolean m_topRight;
     
     private Animation m_animation;
-    private BufferedImage[] m_idleSprites;
-    private BufferedImage[] m_walkingSprites;
-    private BufferedImage[] m_jumpingSprites;
-    private BufferedImage[] m_fallingSprites;
     
     private Map m_tileMap;
     
-    public void setx(int i) { m_x = i; }
-    public void sety(int i) { m_y = i; }
+    public void setPos(int x, int y){
+        m_x = x; 
+        m_y = y;
+    }
     public int getX(){ return m_x; }
     public int getY(){ return m_y; }
     public void setLeft(boolean b) { m_left = b; }
@@ -53,53 +51,27 @@ public class Player {
     public void setJumping(boolean b) {
         m_jumping = !m_inAir ? true : m_jumping;
     }
-    
-    void calculateCorners(double tx, double ty){
-        // Bottom Left Corner
-        int cx = m_tileMap.getColTile((int)tx - m_width/2);
-        int cy = m_tileMap.getRowTile((int)ty + m_height/2);   
-        m_bottomLeft = m_tileMap.isBlocked(cx, cy);
-        
-        // Bottom Right Corner
-        cx = m_tileMap.getColTile((int)tx + m_width/2);
-        cy = m_tileMap.getRowTile((int)ty + m_height/2);
-        m_bottomRight = m_tileMap.isBlocked(cx, cy);
-        
-        // Top left corner
-        cx = m_tileMap.getColTile((int)tx - m_width/2);
-        cy = m_tileMap.getRowTile((int)ty - m_height/2);
-        m_topLeft = m_tileMap.isBlocked(cx, cy);
-        
-        // Top Right Corner
-        cx = m_tileMap.getColTile((int)tx + m_width/2);
-        cy = m_tileMap.getRowTile((int)ty - m_height/2);
-        m_topRight = m_tileMap.isBlocked(cx, cy);
-    }
-    
-    public Player(Map tileMap) {
-
+    public void setMap(Map tileMap){
         m_tileMap = tileMap;
-        m_width = 60;
-        m_height = 60;
+    }
+        
+    public Player(int width, int height) {
+
+        m_width = width;
+        m_height = height;
         
         m_facingLeft = false;
         m_left = m_right = m_jumping = m_inAir = false;
         m_moveSpeed = 0.6;
         m_maxSpeed = 5.0;
         m_stopSpeed = 0.5;
-        m_jumpStart = -9.0;
+        m_jumpStart = -height * 0.12;
         
         m_maxFallingSpeed = 20.0;
         m_gravity = 0.4;
 
-        // Load sprites
-        m_idleSprites = AssetHandler.getPlayerIdle();
-        m_jumpingSprites =AssetHandler.getPlayerJump();
-        m_fallingSprites = AssetHandler.getPlayerFall();
-        m_walkingSprites = AssetHandler.getPlayerWalk();
-
         m_animation = new Animation();
-        m_animation.setFrames(m_idleSprites);
+        m_animation.setFrames(AssetHandler.getPlayerIdle());
         m_animation.setDelay(-1);
     }
     
@@ -139,7 +111,18 @@ public class Player {
         }
         else 
             m_dy = 0;
+       
+        CheckForObstacles();
         
+        setAnimation();
+        
+        // Update pos
+        m_x += m_dx;                 
+        m_y += m_dy;
+    }
+    
+    private void CheckForObstacles(){
+         
         double toX = m_x + m_dx;
         double toY = m_y + m_dy;
 
@@ -183,26 +166,50 @@ public class Player {
             m_dx = 0;
             m_x = 1;
         }
+    }
+    
+        void calculateCorners(double tx, double ty){
+        // Bottom Left Corner
+        int cx = m_tileMap.getColTile((int)tx - m_width/2);
+        int cy = m_tileMap.getRowTile((int)ty + m_height/2);   
+        m_bottomLeft = m_tileMap.isBlocked(cx, cy);
         
-        // sprite animation
+        // Bottom Right Corner
+        cx = m_tileMap.getColTile((int)tx + m_width/2);
+        cy = m_tileMap.getRowTile((int)ty + m_height/2);
+        m_bottomRight = m_tileMap.isBlocked(cx, cy);
+        
+        // Top left corner
+        cx = m_tileMap.getColTile((int)tx - m_width/2);
+        cy = m_tileMap.getRowTile((int)ty - m_height/2);
+        m_topLeft = m_tileMap.isBlocked(cx, cy);
+        
+        // Top Right Corner
+        cx = m_tileMap.getColTile((int)tx + m_width/2);
+        cy = m_tileMap.getRowTile((int)ty - m_height/2);
+        m_topRight = m_tileMap.isBlocked(cx, cy);
+    }
+    
+    private void setAnimation(){
+                // sprite animation
         if(m_left || m_right) {
-                m_animation.setFrames(m_walkingSprites);
+                m_animation.setFrames(AssetHandler.getPlayerWalk());
                 m_animation.setDelay(100); 
         }
         else {
-                m_animation.setFrames(m_idleSprites);
+                m_animation.setFrames(AssetHandler.getPlayerIdle());
                 m_animation.setDelay(-1);
         }
         if(m_dy < 0) {
-                m_animation.setFrames(m_jumpingSprites);
+                m_animation.setFrames(AssetHandler.getPlayerJump());
                 m_animation.setDelay(-1);
         }
         if(m_dy > 0) {
-                m_animation.setFrames(m_fallingSprites);
+                m_animation.setFrames(AssetHandler.getPlayerFall());
                 m_animation.setDelay(-1);
         }
         m_animation.update();
-
+        
         // Update facing
         if(m_dx < 0) {
             m_facingLeft = true;
@@ -210,13 +217,8 @@ public class Player {
         if(m_dx > 0) {
             m_facingLeft = false;
         }
-        
-        // Update pos
-        m_x += m_dx;                 
-        m_y += m_dy;
     }
     
-
     public void draw(Graphics2D g) {
         
         if(m_facingLeft){

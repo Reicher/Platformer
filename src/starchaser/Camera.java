@@ -62,7 +62,7 @@ public class Camera {
         // Check upper limits
         if(new_x > m_limitX[1] - m_width) new_x = m_limitX[1] - m_width;
         if(new_y > m_limitY[1] - m_height) new_y = m_limitY[1] - m_height;
- 
+        
         g.translate(-new_x, -new_y);
     }
     
