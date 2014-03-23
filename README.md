@@ -20,6 +20,7 @@ The beginning to a platform game with a space theme. The story goes something li
 * A really simple NPC/Talk system to get the story out.
 * Dangerous water, everyone knows water is the Achilles heal of platform characters
 * Enemies to watch out for
+* Fullscreen
 
 ### What i would want in the long run
 * Randomized chracter looks. Skin tone, sex, hair, color of cloths
