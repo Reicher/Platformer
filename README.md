@@ -1,4 +1,4 @@
-Platform
+StarChaser
 ==========
 
 The beginning to a platform game with a space theme. The story goes something like this:
@@ -12,11 +12,11 @@ The beginning to a platform game with a space theme. The story goes something li
 * Almost flawless collisions between player and map.
 * A cool animated background.
 * Super mario style horizontal scrolling map.
+* Stars to collect!
+* A door to progress to the next level
 
 ### What I would want in the near future:
 * Perfect player collisions, jumping up into something stops both horizontal and vertical speed, not good.
-* A level structure with start and exit.
-* Stars to collect!
 * A really simple NPC/Talk system to get the story out.
 * Dangerous water, everyone knows water is the Achilles heal of platform characters
 * Enemies to watch out for

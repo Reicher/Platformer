@@ -17,8 +17,10 @@ public abstract class Level {
     protected Map m_levelMap;
     protected Player m_player;
     protected Camera m_levelCam;
+    
     protected Star[] m_stars;
     protected Door m_exitDoor;
+    protected Water[] m_water;
     
     protected boolean m_completed;
     

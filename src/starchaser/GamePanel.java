@@ -133,7 +133,6 @@ public class GamePanel extends JPanel implements KeyListener {
         Graphics2D g2 = (Graphics2D)g; 
         m_currentLevel.draw(g2);
                 
-        m_player.draw(g2);
     }
     
 

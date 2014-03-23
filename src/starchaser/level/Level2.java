@@ -42,6 +42,9 @@ public class Level2 extends Level{
             s.draw(g);
         
         m_exitDoor.draw(g);
+        
+        m_player.draw(g);
+        
     }
 
     @Override
