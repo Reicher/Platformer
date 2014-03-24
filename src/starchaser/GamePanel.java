@@ -21,11 +21,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import starchaser.level.Background;
-import starchaser.level.Level;
-import starchaser.level.Level1;
-import starchaser.level.Level2;
-import starchaser.level.Map;
 
 /**
  *

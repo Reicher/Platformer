@@ -4,8 +4,9 @@
  */
 package starchaser;
 
-import starchaser.level.Map;
+import starchaser.Map;
 import java.awt.Graphics2D;
+import starchaser.Player;
 
 /**
  *

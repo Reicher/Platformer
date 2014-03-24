@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package starchaser.level;
+package starchaser;
 
 import java.awt.Graphics2D;
 import starchaser.Player;
