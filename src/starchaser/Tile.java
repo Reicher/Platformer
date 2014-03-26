@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package starchaser.Tile;
+package starchaser;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -51,5 +51,14 @@ public abstract class Tile {
     
     public Rectangle getBounds() {
         return new Rectangle(m_x, m_y, m_width, m_height);
+    }
+    
+    public int getX(){ return m_x; }
+    
+    public int getY(){ return m_y; }
+    
+    public void setPos(int x, int y){
+        m_x = x; 
+        m_y = y;
     }
 }

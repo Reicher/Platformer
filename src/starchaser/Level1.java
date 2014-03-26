@@ -31,10 +31,19 @@ public class Level1 extends Level{
     }
     
     private void addStars(){
+        
         m_stars = new Star[3];
-        m_stars[0] = new Star(m_levelMap.gridToScreenX(2), m_levelMap.gridToScreenY(5), m_levelMap.getTileSize());
-        m_stars[1] = new Star(m_levelMap.gridToScreenX(5), m_levelMap.gridToScreenY(1), m_levelMap.getTileSize());
-        m_stars[2] = new Star(m_levelMap.gridToScreenX(15), m_levelMap.gridToScreenY(3), m_levelMap.getTileSize());
+        m_stars[0] = new Star(  m_levelMap.gridToScreenX(2), 
+                                m_levelMap.gridToScreenY(5), 
+                                m_levelMap.getTileSize());
+        m_stars[1] = new Star(
+                                m_levelMap.gridToScreenX(5), 
+                                m_levelMap.gridToScreenY(1), 
+                                m_levelMap.getTileSize());
+        m_stars[2] = new Star(
+                                m_levelMap.gridToScreenX(15), 
+                                m_levelMap.gridToScreenY(3), 
+                                m_levelMap.getTileSize());
     }
     
     private void addWater(){

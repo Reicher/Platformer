@@ -5,7 +5,6 @@
 package starchaser;
 
 import java.awt.Graphics2D;
-import starchaser.Tile.Tile;
 
 /**
  *

@@ -6,8 +6,6 @@
 
 package starchaser;
 
-import starchaser.Tile.Tile;
-
 /**
  *
  * @author regen

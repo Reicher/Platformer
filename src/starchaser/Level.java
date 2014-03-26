@@ -5,6 +5,7 @@
 package starchaser;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import starchaser.Player;
 
 /**
@@ -17,7 +18,7 @@ public abstract class Level {
     protected Map m_levelMap;
     protected Player m_player;
     protected Camera m_levelCam;
-    
+
     protected Star[] m_stars;
     protected Door m_exitDoor;
     protected Water[] m_water;
@@ -30,12 +31,10 @@ public abstract class Level {
         m_levelMap = new Map(tileMap, width, height);
         m_background = new Background(width, height);
         m_levelCam = new Camera(0, 0, width, height);
+        
     }
     
-    public Map getMap(){
-        return m_levelMap;
-    }
-    
+    public Map getMap(){ return m_levelMap;}
     public boolean isCompleted(){ return m_completed; }
     
     public void init(Player player){

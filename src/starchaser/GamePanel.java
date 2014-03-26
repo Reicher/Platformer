@@ -12,11 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Vector;
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -31,16 +27,13 @@ public class GamePanel extends JPanel implements KeyListener {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
 
-    private int FPS = 30;
-    private int targetTime = 1000 / FPS;
+    private final int FPS = 30;
+    private int updateInterval;
     private Timer gameTimer;
     private boolean m_loaded = false;
-    private boolean m_releasedJump = true;
+    private boolean m_releasedJump = true; // UGGGGLY
     
     private ActionListener m_listener;
-    
-    private Background m_background;
-    private Map m_tileMap;
     private Player m_player;
     
     private State m_gameState;
@@ -55,6 +48,8 @@ public class GamePanel extends JPanel implements KeyListener {
     
     public GamePanel() {
         super();
+        this.updateInterval = 1000 / FPS;
+        
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setFocusable(true);
         requestFocus();
@@ -83,7 +78,7 @@ public class GamePanel extends JPanel implements KeyListener {
         m_levels.removeElement(m_currentLevel);
         m_currentLevel.init(m_player);
   
-        gameTimer = new Timer(targetTime, m_listener);
+        gameTimer = new Timer(updateInterval, m_listener);
         addKeyListener(this);
         
         m_gameState = State.GAME;

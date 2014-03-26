@@ -6,8 +6,6 @@
 
 package starchaser;
 
-import starchaser.Tile.Tile;
-
 public class Water extends Tile {
     
     public Water(int x, int y, int tileSize){

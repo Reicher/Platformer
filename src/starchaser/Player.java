@@ -6,88 +6,45 @@ package starchaser;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  *
  * @author regen
  */
-public class Player {
-    
-    private int m_x, m_y;
-    private double m_dx, m_dy;
-    
-    private int m_width, m_height;
-    
+public class Player extends MovingTile{
     private boolean m_dead;
     private boolean m_isUsing;
     
     private double m_moveSpeed, m_maxSpeed, m_stopSpeed;
-    private double m_maxFallingSpeed;
-    private double m_gravity;
     private double m_jumpStart;
     
     private boolean m_facingLeft;
-    private boolean m_left;
-    private boolean m_right;
-    private boolean m_jumping;
-    private boolean m_inAir;  
     
     private boolean m_bottomLeft;
     private boolean m_bottomRight;
     private boolean m_topLeft;
     private boolean m_topRight;
-    
-    private Animation m_animation;
-    
-    private Map m_tileMap;
-    
-    public void setPos(int x, int y){
-        m_x = x; 
-        m_y = y;
-    }
-    public int getX(){ return m_x; }
-    public int getY(){ return m_y; }
+
     public boolean isDead(){ return m_dead; }
-    public void setLeft(boolean b) { m_left = b; }
-    public void setRight(boolean b) { m_right = b; }
-    public void setJumping(boolean b) {
-        m_jumping = !m_inAir ? true : m_jumping;
-    }
-    public void setMap(Map tileMap){
-        m_tileMap = tileMap;
-    }
         
     public Player(int width, int height) {
-
-        m_width = width;
-        m_height = height;
+        super(0, 0, width, height, AssetHandler.getPlayerIdle());
+        
         m_isUsing = false;
-        
         m_facingLeft = false;
-        m_left = m_right = m_jumping = m_inAir = false;
+        
         m_moveSpeed = 0.6;
-        m_maxSpeed = 5.0;
+        m_maxSpeed = 7.0;
         m_stopSpeed = 0.5;
-        m_jumpStart = -height * 0.12;
-        
-        m_maxFallingSpeed = 20.0;
-        m_gravity = 0.4;
+        m_jumpStart = -height * 0.16;
 
-        m_animation = new Animation();
-        m_animation.setFrames(AssetHandler.getPlayerIdle());
-        m_animation.setDelay(-1);
-        
         init();
     }
     
     public void init(){
         m_dead = false;
-        
-        m_animation.setFrames(AssetHandler.getPlayerIdle());
-        m_animation.setDelay(-1);
     }
     
     public void update() {
@@ -243,12 +200,7 @@ public class Player {
             m_facingLeft = false;
         }
     }
-    
-    // For simple intersections
-    public Rectangle getBounds() {
-        return new Rectangle(m_x, m_y, m_width, m_height);
-    }
-    
+
     public void draw(Graphics2D g) {
         
         if(m_facingLeft){
@@ -280,7 +232,5 @@ public class Player {
     public boolean isUsing(){
         return m_isUsing;
     }
-    
-
 }
 
